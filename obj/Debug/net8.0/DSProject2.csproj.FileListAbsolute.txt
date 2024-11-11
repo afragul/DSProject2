@@ -1,0 +1,14 @@
+/Users/afragultig/Desktop/DSProject2/bin/Debug/net8.0/DSProject2
+/Users/afragultig/Desktop/DSProject2/bin/Debug/net8.0/DSProject2.deps.json
+/Users/afragultig/Desktop/DSProject2/bin/Debug/net8.0/DSProject2.runtimeconfig.json
+/Users/afragultig/Desktop/DSProject2/bin/Debug/net8.0/DSProject2.dll
+/Users/afragultig/Desktop/DSProject2/bin/Debug/net8.0/DSProject2.pdb
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.GeneratedMSBuildEditorConfig.editorconfig
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.AssemblyInfoInputs.cache
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.AssemblyInfo.cs
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.csproj.CoreCompileInputs.cache
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.dll
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/refint/DSProject2.dll
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.pdb
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/DSProject2.genruntimeconfig.cache
+/Users/afragultig/Desktop/DSProject2/obj/Debug/net8.0/ref/DSProject2.dll
