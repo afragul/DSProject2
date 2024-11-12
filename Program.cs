@@ -7,7 +7,7 @@ namespace Name
     { //item b
         private double[] inputsList;
         private double[] weightsList;
-        private Random random;
+        public static Random random;
 
         public Neuron(double[] inputList)
         { //constructor
@@ -27,9 +27,13 @@ namespace Name
             for (int i = 0; i < inputsList.Length; i++)
             {
                 result += inputsList[i] * weightsList[i];
+            } 
+            if (result>0.5)
+            {
+                return 1;
+            }else{
+                return 0;
             }
-
-            return result;
         }
     }
 
@@ -54,7 +58,7 @@ namespace Name
             List<int[,]> onePatternList = Program.GenerateOnePattern();
             List<int[,]> twoPatternList = Program.generateTwoPattern();
 
-            int index = 0;
+            int index;
             int index2 = 0;
             foreach (var item in onePatternList) //generateonepatternden donen listeyi dolasip icindeki matrislere erismek istemek
             {
@@ -69,11 +73,10 @@ namespace Name
                 }
                 neuron1 = new Neuron(FirstNeurononePatternsInput);
                 firstNeuronOneOutputs[index2] = neuron1.Calculate();
-                firstNeuronOneOutputs = new double [25];
+                FirstNeurononePatternsInput = new double [25];
                 index2++;
             }
 
-            index = 0;
             index2 = 0;
             foreach (var item in twoPatternList)
             {
@@ -88,11 +91,10 @@ namespace Name
                 }
                 neuron2 = new Neuron(SecondNeurontwoPatternsInput);
                 secondNeuronTwoOutputs[index2] = neuron2.Calculate();
-                SecondNeurontwoPatternsInput = new Double[25];
+                SecondNeurontwoPatternsInput = new double [25];
                 index2++;
             }
 
-            index = 0;
             index2 = 0;
             foreach (var item in twoPatternList)
             {
@@ -111,7 +113,6 @@ namespace Name
                 index2++;
             }
 
-            index = 0;
             index2 = 0;
             foreach (var item in onePatternList)
             {
@@ -130,15 +131,49 @@ namespace Name
                 index2++;
             }
 
+            int expectedValue1=1;
+            int expectedValue0=0;
+            foreach (var item in firstNeuronOneOutputs) //first neuron's outputs from one pattern matrix
+            {
+                if (item==expectedValue1)
+                {
+                    continue; //burada islem yapilacak mi bilmiyorum bakilacak
+                }else{
+                    //burada hesaplama islemleri olacak cikan degerler arttirilacak
+                }
+            }
+
+            foreach (var item in firstNeuronTwoOutputs)
+            {
+                if (item==expectedValue0)
+                {
+                    continue;
+                }else{
+                    //burada azaltma islemleri uygulanacak
+                }
+            }
+
+            foreach (var item in secondNeuronOneOutputs)
+            {
+                if (item==expectedValue0)
+                {
+                    continue;
+                }else{
+                    //azaltma islemleri uygulanacak
+                }
+            }
+            foreach (var item in secondNeuronTwoOutputs)
+            {
+                if (item==expectedValue1)
+                {
+                    continue;
+                }else{
+                    //arttirma islemleri uygulanacak
+                }
+            }
+
         }
 
-        public void Print() //calculate sonuclarini yazdirmak icin olusturuldu
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                Console.WriteLine(secondNeuronOneOutputs[i]);
-            }
-        }
     }
     class Program
     {
@@ -322,9 +357,6 @@ namespace Name
         }
         static void Main(string[] args)
         {
-            NeuralNetwork deneme = new NeuralNetwork();
-            deneme.Print();
-            Console.ReadKey();
         }
     }
 
