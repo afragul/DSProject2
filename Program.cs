@@ -75,7 +75,7 @@ namespace Name
         double[] secondNeuronTwoOutputs = new double[10];
 
 
-        
+
 
 
         private double[] FlattenedPattern(int[,] pattern)
@@ -103,20 +103,20 @@ namespace Name
                     {
                         continue;
                     }
-                    if( output > expectedOutput)
+                    if (output > expectedOutput)
                     {
-                        neuron.DecreaseWeights(flattenPattern,expectedOutput);
+                        neuron.DecreaseWeights(flattenPattern, expectedOutput);
                     }
                     else
                     {
-                        neuron.IncreaseWeights(flattenPattern,expectedOutput);
+                        neuron.IncreaseWeights(flattenPattern, expectedOutput);
                     }
                 }
             }
         }
         public NeuralNetwork()
         {
-            neuron1 = new Neuron (new double[25]);
+            neuron1 = new Neuron(new double[25]);
             neuron2 = new Neuron(new double[25]);
             //Program onePattern,twoPattern;
             List<int[,]> onePatternList = Program.GenerateOnePattern();
@@ -132,12 +132,13 @@ namespace Name
         public double Test(List<int[,]> testPatterns, int expectedOutput)
         {
             int correctCount = 0;
-            foreach(var pattern in testPatterns) {
+            foreach (var pattern in testPatterns)
+            {
                 double[] flattenPattern = FlattenedPattern(pattern);
                 double output1 = neuron1.Calculate();
                 double output2 = neuron2.Calculate();
 
-                int predictedOutput = (output1 > output2) ? 1: 0;
+                int predictedOutput = (output1 > output2) ? 1 : 0;
 
                 if (predictedOutput == expectedOutput)
                 {
@@ -148,16 +149,16 @@ namespace Name
             }
             return correctCount / testPatterns.Count;
 
-    }
-    class Program
-    {
-
-        //item a
-        //create first character
-        public static List<int[,]> GenerateOnePattern()
+        }
+        class Program
         {
-            List<int[,]> firstPatternsList = new List<int[,]>();
-            int[,] firstPattern = {
+
+            //item a
+            //create first character
+            public static List<int[,]> GenerateOnePattern()
+            {
+                List<int[,]> firstPatternsList = new List<int[,]>();
+                int[,] firstPattern = {
                 { 0, 0, 1, 0, 0 },
                 { 0, 1, 1, 0, 0 },
                 { 0, 0, 1, 0, 0 },
@@ -165,7 +166,7 @@ namespace Name
                 { 0, 0, 1, 0, 0 }
             };
 
-            int[,] variation1 ={
+                int[,] variation1 ={
                 {0,0,1,0,0},
                 {0,1,1,0,0},
                 {0,0,1,0,0},
@@ -173,7 +174,7 @@ namespace Name
                 {1,1,1,1,1}
             };
 
-            int[,] variation2 ={
+                int[,] variation2 ={
                 {0,0,1,0,0},
                 {0,0,1,0,0},
                 {0,0,1,0,0},
@@ -181,7 +182,7 @@ namespace Name
                 {1,1,1,1,1}
             };
 
-            int[,] variation3 ={
+                int[,] variation3 ={
                 {0,0,1,0,0},
                 {0,1,1,0,0},
                 {1,0,1,0,0},
@@ -189,7 +190,7 @@ namespace Name
                 {1,1,1,1,1}
             };
 
-            int[,] variation4 ={
+                int[,] variation4 ={
                 {0,0,1,0,0},
                 {0,1,1,0,0},
                 {1,0,1,0,0},
@@ -197,7 +198,7 @@ namespace Name
                 {0,0,1,0,0}
             };
 
-            int[,] variation5 ={
+                int[,] variation5 ={
                 {0,0,1,0,0},
                 {0,0,1,0,0},
                 {0,0,1,0,0},
@@ -205,7 +206,7 @@ namespace Name
                 {0,0,1,0,0}
             };
 
-            int[,] variation6 ={
+                int[,] variation6 ={
                 {0,0,0,1,0},
                 {0,0,1,1,0},
                 {0,0,0,1,0},
@@ -213,7 +214,7 @@ namespace Name
                 {0,0,0,1,0}
             };
 
-            int[,] variation7 ={
+                int[,] variation7 ={
                 {0,0,0,0,1},
                 {0,0,0,1,1},
                 {0,0,0,0,1},
@@ -221,7 +222,7 @@ namespace Name
                 {0,0,0,0,1}
             };
 
-            int[,] variation8 ={
+                int[,] variation8 ={
                 {0,1,0,0,0},
                 {1,1,0,0,0},
                 {0,1,0,0,0},
@@ -229,7 +230,7 @@ namespace Name
                 {0,1,0,0,0}
             };
 
-            int[,] variation9 ={
+                int[,] variation9 ={
                 {0,1,0,0,0},
                 {0,1,0,0,0},
                 {0,1,0,0,0},
@@ -237,23 +238,23 @@ namespace Name
                 {0,1,0,0,0}
             };
 
-            firstPatternsList.AddRange(new List<int[,]> { firstPattern, variation1, variation2, variation3, variation4, variation5, variation6, variation7, variation8, variation9 });
+                firstPatternsList.AddRange(new List<int[,]> { firstPattern, variation1, variation2, variation3, variation4, variation5, variation6, variation7, variation8, variation9 });
 
-            return firstPatternsList;
-        }
+                return firstPatternsList;
+            }
 
-        //create second character
-        public static List<int[,]> generateTwoPattern()
-        {
-            List<int[,]> secondPatternsList = new List<int[,]>();
-            int[,] secondPattern = {
+            //create second character
+            public static List<int[,]> generateTwoPattern()
+            {
+                List<int[,]> secondPatternsList = new List<int[,]>();
+                int[,] secondPattern = {
                 { 0, 1, 1, 1, 0 },
                 { 1, 0, 0, 0, 1 },
                 { 0, 0, 0, 1, 0 },
                 { 0, 0, 1, 0, 0 },
                 { 1, 1, 1, 1, 1 }
             };
-            int[,] variation1 = {
+                int[,] variation1 = {
                 { 1, 1, 1, 1, 1 },
                 { 0, 0, 0, 0, 1 },
                 { 1, 1, 1, 1, 1 },
@@ -261,7 +262,7 @@ namespace Name
                 { 1, 1, 1, 1, 1 }
             };
 
-            int[,] variation2 = {
+                int[,] variation2 = {
                 { 1, 1, 1, 1, 0 },
                 { 0, 0, 0, 0, 1 },
                 { 0, 1, 1, 1, 0 },
@@ -269,7 +270,7 @@ namespace Name
                 { 0, 1, 1, 1, 1 }
             };
 
-            int[,] variation3 = {
+                int[,] variation3 = {
                 { 0, 1, 1, 1, 0 },
                 { 0, 0, 0, 1, 0 },
                 { 0, 1, 1, 1, 0 },
@@ -277,7 +278,7 @@ namespace Name
                 { 0, 1, 1, 1, 0 }
             };
 
-            int[,] variation4 = {
+                int[,] variation4 = {
                 { 1 ,1 ,1 ,1 ,1 },
                 { 0 ,0 ,0 ,1 ,1 },
                 { 1 ,1 ,1 ,1 ,1 },
@@ -285,7 +286,7 @@ namespace Name
                 { 1 ,1 ,1 ,1 ,1 }
             };
 
-            int[,] variation5 = {
+                int[,] variation5 = {
                 { 1 ,1 ,1 ,1 ,0},
                 { 0 ,0 ,0 ,1 ,0},
                 { 1 ,1 ,1 ,1 ,0},
@@ -293,7 +294,7 @@ namespace Name
                 { 1 ,1 ,1 ,1 ,0}
             };
 
-            int[,] variation6 = {
+                int[,] variation6 = {
                 { 0, 1, 1, 1, 0 },
                 { 0, 0, 0, 0, 1 },
                 { 0, 0, 0, 1, 0 },
@@ -301,7 +302,7 @@ namespace Name
                 { 1, 1, 1, 1, 1 }
             };
 
-            int[,] variation7 = {
+                int[,] variation7 = {
                 { 0, 1, 1, 1, 0 },
                 { 0, 0, 0, 0, 1 },
                 { 0, 0, 0, 1, 0 },
@@ -309,7 +310,7 @@ namespace Name
                 { 0, 1, 1, 1, 1 }
             };
 
-            int[,] variation8 = {
+                int[,] variation8 = {
                 { 1, 1, 1, 0, 0 },
                 { 0, 0, 0, 1, 0 },
                 { 0, 0, 1, 0, 0 },
@@ -317,7 +318,7 @@ namespace Name
                 { 1, 1, 1, 1, 0 }
             };
 
-            int[,] variation9 = {
+                int[,] variation9 = {
                 { 0, 1 ,1 ,1 ,1},
                 { 0, 0 ,0 ,0 ,1},
                 { 0, 1 ,1 ,1 ,1},
@@ -325,14 +326,15 @@ namespace Name
                 { 0, 1 ,1 ,1 ,1}
             };
 
-            secondPatternsList.AddRange(new List<int[,]> { secondPattern, variation1, variation2, variation3, variation4, variation5, variation6, variation7, variation8, variation9 });
+                secondPatternsList.AddRange(new List<int[,]> { secondPattern, variation1, variation2, variation3, variation4, variation5, variation6, variation7, variation8, variation9 });
 
-            return secondPatternsList;
+                return secondPatternsList;
+            }
+            static void Main(string[] args)
+            {
+                NeuralNetwork network = new NeuralNetwork();
+            }
         }
-        static void Main(string[] args)
-        {
-            NeuralNetwork network = new NeuralNetwork();
-        }
+
     }
-
 }
