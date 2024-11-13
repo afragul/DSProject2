@@ -1,5 +1,8 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Runtime.CompilerServices;
 
 namespace Name
 {
@@ -27,12 +30,36 @@ namespace Name
             for (int i = 0; i < inputsList.Length; i++)
             {
                 result += inputsList[i] * weightsList[i];
-            } 
-            if (result>0.5)
+            }
+            if (result > 0.5)
             {
                 return 1;
-            }else{
+            }
+            else
+            {
                 return 0;
+            }
+        }
+
+        public void IncreaseWeights(double[] inputs, int expectedOutput)
+        {
+            double output = Calculate();
+            double error = expectedOutput - output;
+
+            for (int i = 0; i < weightsList.Length; i++)
+            {
+                weightsList[i] += 0.03 * error * inputs[i];
+            }
+        }
+
+        public void DecreaseWeights(double[] inputs, int expectedOutput)
+        {
+            double output = Calculate();
+            double error = expectedOutput - output;
+
+            for (int i = 0; i < weightsList.Length; i++)
+            {
+                weightsList[i] -= 0.03 * error * inputs[i];
             }
         }
     }
@@ -41,138 +68,85 @@ namespace Name
     {
         private Neuron neuron1;
         private Neuron neuron2;
-        double[] FirstNeurononePatternsInput = new double[25];
-        double[] SecondNeurontwoPatternsInput = new double[25];
-        double[] FirstNeurontwoPatternsInput = new double[25];
-        double[] SecondNeurononePatternsInput = new double[25];
 
         double[] firstNeuronOneOutputs = new double[10];
         double[] firstNeuronTwoOutputs = new double[10];
         double[] secondNeuronOneOutputs = new double[10];
         double[] secondNeuronTwoOutputs = new double[10];
 
+
+        
+
+
+        private double[] FlattenedPattern(int[,] pattern)
+        {
+            double[] flattened = new double[25];
+            for (int i = 0, index = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    flattened[index++] = pattern[i, j];
+                }
+            }
+            return flattened;
+        }
+
+        private void Train(Neuron neuron, List<int[,]> patternList, int expectedOutput)
+        {
+            for (int epoch = 0; epoch < 40; epoch++)
+            {
+                foreach (var pattern in patternList)
+                {
+                    double[] flattenPattern = FlattenedPattern(pattern);
+                    double output = neuron.Calculate();
+                    if (output == expectedOutput)
+                    {
+                        continue;
+                    }
+                    if( output > expectedOutput)
+                    {
+                        neuron.DecreaseWeights(flattenPattern,expectedOutput);
+                    }
+                    else
+                    {
+                        neuron.IncreaseWeights(flattenPattern,expectedOutput);
+                    }
+                }
+            }
+        }
         public NeuralNetwork()
         {
-
+            neuron1 = new Neuron (new double[25]);
+            neuron2 = new Neuron(new double[25]);
             //Program onePattern,twoPattern;
             List<int[,]> onePatternList = Program.GenerateOnePattern();
             List<int[,]> twoPatternList = Program.generateTwoPattern();
 
-            int index;
-            int index2 = 0;
-            foreach (var item in onePatternList) //generateonepatternden donen listeyi dolasip icindeki matrislere erismek istemek
-            {
-                index = 0;
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        FirstNeurononePatternsInput[index] = item[i, j];
-                        index++;
-                    }
-                }
-                neuron1 = new Neuron(FirstNeurononePatternsInput);
-                firstNeuronOneOutputs[index2] = neuron1.Calculate();
-                FirstNeurononePatternsInput = new double [25];
-                index2++;
-            }
-
-            index2 = 0;
-            foreach (var item in twoPatternList)
-            {
-                index = 0;
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        SecondNeurontwoPatternsInput[index] = item[i, j];
-                        index++;
-                    }
-                }
-                neuron2 = new Neuron(SecondNeurontwoPatternsInput);
-                secondNeuronTwoOutputs[index2] = neuron2.Calculate();
-                SecondNeurontwoPatternsInput = new double [25];
-                index2++;
-            }
-
-            index2 = 0;
-            foreach (var item in twoPatternList)
-            {
-                index = 0;
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        FirstNeurontwoPatternsInput[index] = item[i, j];
-                        index++;
-                    }
-                }
-                neuron1 = new Neuron(FirstNeurontwoPatternsInput);
-                firstNeuronTwoOutputs[index2] = neuron1.Calculate();
-                FirstNeurontwoPatternsInput = new Double[25];
-                index2++;
-            }
-
-            index2 = 0;
-            foreach (var item in onePatternList)
-            {
-                index = 0;
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        SecondNeurononePatternsInput[index] = item[i, j];
-                        index++;
-                    }
-                }
-                neuron2 = new Neuron(SecondNeurononePatternsInput);
-                secondNeuronOneOutputs[index2] = neuron2.Calculate();
-                SecondNeurontwoPatternsInput = new Double[25];
-                index2++;
-            }
-
-            int expectedValue1=1;
-            int expectedValue0=0;
-            foreach (var item in firstNeuronOneOutputs) //first neuron's outputs from one pattern matrix
-            {
-                if (item==expectedValue1)
-                {
-                    continue; //burada islem yapilacak mi bilmiyorum bakilacak
-                }else{
-                    //burada hesaplama islemleri olacak cikan degerler arttirilacak
-                }
-            }
-
-            foreach (var item in firstNeuronTwoOutputs)
-            {
-                if (item==expectedValue0)
-                {
-                    continue;
-                }else{
-                    //burada azaltma islemleri uygulanacak
-                }
-            }
-
-            foreach (var item in secondNeuronOneOutputs)
-            {
-                if (item==expectedValue0)
-                {
-                    continue;
-                }else{
-                    //azaltma islemleri uygulanacak
-                }
-            }
-            foreach (var item in secondNeuronTwoOutputs)
-            {
-                if (item==expectedValue1)
-                {
-                    continue;
-                }else{
-                    //arttirma islemleri uygulanacak
-                }
-            }
+            Train(neuron1, onePatternList, expectedOutput: 1);
+            Train(neuron1, twoPatternList, expectedOutput: 0);
+            Train(neuron2, onePatternList, expectedOutput: 1);
+            Train(neuron2, twoPatternList, expectedOutput: 0);
 
         }
+
+        public double Test(List<int[,]> testPatterns, int expectedOutput)
+        {
+            int correctCount = 0;
+            foreach(var pattern in testPatterns) {
+                double[] flattenPattern = FlattenedPattern(pattern);
+                double output1 = neuron1.Calculate();
+                double output2 = neuron2.Calculate();
+
+                int predictedOutput = (output1 > output2) ? 1: 0;
+
+                if (predictedOutput == expectedOutput)
+                {
+                    correctCount++;
+                }
+                Console.WriteLine($"Expected: {expectedOutput}, Predicted: {predictedOutput}");
+
+            }
+            return correctCount / testPatterns.Count;
 
     }
     class Program
@@ -357,6 +331,7 @@ namespace Name
         }
         static void Main(string[] args)
         {
+            NeuralNetwork network = new NeuralNetwork();
         }
     }
 
