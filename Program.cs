@@ -1,7 +1,8 @@
-
 using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Data.SqlTypes;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 
 namespace Name
@@ -75,9 +76,6 @@ namespace Name
         double[] secondNeuronTwoOutputs = new double[10];
 
 
-
-
-
         private double[] FlattenedPattern(int[,] pattern)
         {
             double[] flattened = new double[25];
@@ -120,7 +118,7 @@ namespace Name
             neuron2 = new Neuron(new double[25]);
             //Program onePattern,twoPattern;
             List<int[,]> onePatternList = Program.GenerateOnePattern();
-            List<int[,]> twoPatternList = Program.generateTwoPattern();
+            List<int[,]> twoPatternList = Program.GenerateTwoPattern();
 
             Train(neuron1, onePatternList, expectedOutput: 1);
             Train(neuron1, twoPatternList, expectedOutput: 0);
@@ -244,7 +242,7 @@ namespace Name
             }
 
             //create second character
-            public static List<int[,]> generateTwoPattern()
+            public static List<int[,]> GenerateTwoPattern()
             {
                 List<int[,]> secondPatternsList = new List<int[,]>();
                 int[,] secondPattern = {
@@ -333,6 +331,53 @@ namespace Name
             static void Main(string[] args)
             {
                 NeuralNetwork network = new NeuralNetwork();
+
+                List<int[,]> onePatternsList = Program.GenerateOnePattern();
+                List<int[,]> twoPatternsList = Program.GenerateTwoPattern();
+
+                double accuracyOne = network.Test(onePatternsList, expectedOutput: 1);
+                double accuracyTwo = network.Test(twoPatternsList, expectedOutput: 0);
+
+                Console.WriteLine($"Accuracy for 1: {accuracyOne * 100}%");
+                Console.WriteLine($"Accuracy for 2: {accuracyTwo * 100}%");
+
+                List<int[,]> newTestPatterns = new List<int[,]>
+{
+    new int[,] {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {1, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1}
+    },
+    new int[,] {
+        {1, 1, 1, 1, 0},
+        {0, 0, 0, 1, 0},
+        {0, 1, 1, 1, 0},
+        {1, 0, 0, 0, 0},
+        {1, 1, 1, 1, 0}
+    },
+    new int[,] {
+        {0, 1, 1, 1, 0},
+        {1, 0, 0, 0, 1},
+        {0, 0, 0, 1, 0},
+        {0, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1}
+    }
+};
+
+                Console.WriteLine("New :");
+                int patternIndex = 1;
+                foreach (var pattern in newTestPatterns)
+                {
+                    double[] flattenPattern = network.FlattenedPattern(pattern);
+                    double output1 = network.neuron1.Calculate();
+                    double output2 = network.neuron2.Calculate();
+                    int predictOutput = (output1 > output2) ? 1 : 0;
+                    Console.WriteLine($"Desen {patternIndex++}: Tahmin edilen değer: {predictOutput}");
+                    Console.ReadKey();
+                }
+
             }
         }
 
