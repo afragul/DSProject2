@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Data.SqlTypes;
@@ -42,14 +42,14 @@ namespace Name
             }
         }
 
-        public void IncreaseWeights(double[] inputs, int expectedOutput)
+        public void IncreaseWeights(double[] inputs, int expectedOutput) 
         {
             double output = Calculate();
             double error = expectedOutput - output;
 
             for (int i = 0; i < weightsList.Length; i++)
             {
-                weightsList[i] += 0.03 * error * inputs[i];
+                weightsList[i] += 0.03 * error * inputs[i]; 
             }
         }
 
@@ -69,13 +69,6 @@ namespace Name
     {
         private Neuron neuron1;
         private Neuron neuron2;
-
-        double[] firstNeuronOneOutputs = new double[10];
-        double[] firstNeuronTwoOutputs = new double[10];
-        double[] secondNeuronOneOutputs = new double[10];
-        double[] secondNeuronTwoOutputs = new double[10];
-
-
         private double[] FlattenedPattern(int[,] pattern)
         {
             double[] flattened = new double[25];
