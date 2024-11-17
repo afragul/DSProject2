@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Data.SqlTypes;
@@ -45,7 +45,7 @@ namespace Name
         public void IncreaseWeights(double[] inputs, int expectedOutput) 
         {
             double output = Calculate();
-            double error = expectedOutput - output;
+            double error = output - expectedOutput;
 
             for (int i = 0; i < weightsList.Length; i++)
             {
